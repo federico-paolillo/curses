@@ -1,13 +1,26 @@
 package hex
 
+type Orientation = int
+
 type Hex struct {
-	x, y, z int
+	x, y, z     int
+	orientation Orientation
 }
 
-const Ne, Nw, E, Se, Sw, W = 0, 1, 2, 3, 4, 5
+type Center struct {
+	X, Y int
+}
+
+const (
+	Pointy = iota
+	Flatty
+)
+
+const sqrt3 = 1.73
+const unit = 1
 
 func New(x, y, z int) Hex {
-	return Hex{x, y, z}
+	return Hex{x, y, z, Pointy}
 }
 
 func (hex Hex) Distance(other Hex) int {
@@ -53,4 +66,37 @@ func (hex Hex) GetY() int {
 
 func (hex Hex) GetZ() int {
 	return hex.z
+}
+
+// Width of the unit Hexagon
+func (hex Hex) UnitWidth() float64 {
+	if hex.orientation == Pointy {
+		return sqrt3
+	} else {
+		return unit
+	}
+}
+
+// Height of the unit Hexagon
+func (hex Hex) UnitHeight() float64 {
+	if hex.orientation == Pointy {
+		return unit
+	} else {
+		return sqrt3
+	}
+}
+
+func (hex Hex) Vertices(size int) [6]Vertex {
+	return [6]Vertex{
+		vertexAtAngle(hex, size, 30),
+		vertexAtAngle(hex, size, 90),
+		vertexAtAngle(hex, size, 150),
+		vertexAtAngle(hex, size, 210),
+		vertexAtAngle(hex, size, 270),
+		vertexAtAngle(hex, size, 320),
+	}
+}
+
+func (hex Hex) Center() Center {
+	return Center{X: hex.y, Y: hex.z}
 }

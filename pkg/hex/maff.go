@@ -3,6 +3,10 @@ package hex
 
 import "math"
 
+type Vertex struct {
+	X, Y float64
+}
+
 // q = z; s = x; r = y
 
 func absi(x int) int {
@@ -83,4 +87,19 @@ func interpolateHex(from, to Hex, percentage float64) Hex {
 
 func isInsidePlane(hex Hex) bool {
 	return hex.x+hex.y+hex.z == 0
+}
+
+func vertexAtAngle(hex Hex, size int, angleDegs int) Vertex {
+	angleRads := float64(angleDegs) * math.Pi / 180
+	floatSize := float64(size)
+
+	center := hex.Center()
+
+	floatCenterX := float64(center.X)
+	floatCenterY := float64(center.Y)
+
+	x := floatCenterX + (math.Cos(angleRads) * floatSize)
+	y := floatCenterY + (math.Sin(angleRads) * floatSize)
+
+	return Vertex{x, y}
 }
