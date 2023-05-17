@@ -68,35 +68,33 @@ func (hex Hex) GetZ() int {
 	return hex.z
 }
 
-// Width of the unit Hexagon
-func (hex Hex) UnitWidth() float64 {
+func (hex Hex) Width() float64 {
 	if hex.orientation == Pointy {
 		return sqrt3
 	} else {
-		return unit
+		return unit * 2
 	}
 }
 
-// Height of the unit Hexagon
-func (hex Hex) UnitHeight() float64 {
+func (hex Hex) Height() float64 {
 	if hex.orientation == Pointy {
-		return unit
+		return unit * 2
 	} else {
 		return sqrt3
 	}
 }
 
-func (hex Hex) Vertices(size int) [6]Vertex {
+func (hex Hex) Vertices() [6]Vertex {
 	return [6]Vertex{
-		vertexAtAngle(hex, size, 30),
-		vertexAtAngle(hex, size, 90),
-		vertexAtAngle(hex, size, 150),
-		vertexAtAngle(hex, size, 210),
-		vertexAtAngle(hex, size, 270),
-		vertexAtAngle(hex, size, 320),
+		vertexAtAngle(hex, 30),
+		vertexAtAngle(hex, 90),
+		vertexAtAngle(hex, 150),
+		vertexAtAngle(hex, 210),
+		vertexAtAngle(hex, 270),
+		vertexAtAngle(hex, 330),
 	}
 }
 
 func (hex Hex) Center() Center {
-	return Center{X: hex.y, Y: hex.z}
+	return Center{X: hex.z, Y: hex.y}
 }

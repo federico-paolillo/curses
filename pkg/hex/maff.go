@@ -1,7 +1,9 @@
 // Quick maffs!
 package hex
 
-import "math"
+import (
+	"math"
+)
 
 type Vertex struct {
 	X, Y float64
@@ -89,17 +91,16 @@ func isInsidePlane(hex Hex) bool {
 	return hex.x+hex.y+hex.z == 0
 }
 
-func vertexAtAngle(hex Hex, size int, angleDegs int) Vertex {
-	angleRads := float64(angleDegs) * math.Pi / 180
-	floatSize := float64(size)
+func vertexAtAngle(hex Hex, angleDegs int) Vertex {
+	angleRads := (float64(angleDegs) * math.Pi) / 180
 
 	center := hex.Center()
 
 	floatCenterX := float64(center.X)
 	floatCenterY := float64(center.Y)
 
-	x := floatCenterX + (math.Cos(angleRads) * floatSize)
-	y := floatCenterY + (math.Sin(angleRads) * floatSize)
+	x := floatCenterX + math.Cos(angleRads)
+	y := floatCenterY + math.Sin(angleRads)
 
 	return Vertex{x, y}
 }

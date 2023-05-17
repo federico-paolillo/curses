@@ -8,30 +8,20 @@ type ScreenCoords struct {
 	X, Y int
 }
 
-const hexSizeUnitToPixelConversionRate = 10
-const hexSize = 2
-const hexSizeMultiplier = hexSize * hexSizeUnitToPixelConversionRate
+const pixelMultiplier = 50
 
-const heightDistance = 3 / 2
-const widthDistance = 1.75
+const vDistance = 3 / 2
+const hDistance = 1.75
 
-func ConvertCenterToCoords(hex hex.Hex) ScreenCoords {
-	center := hex.Center()
+func ConvertVertexToCoords(vertex hex.Vertex) ScreenCoords {
+	xWithOffset := (vertex.X + (hDistance / 2))
+	yWithOffset := (vertex.Y + (1))
 
-	floatX := float64(center.X)
-	floatY := float64(center.Y)
+	xWithTranslation := xWithOffset //+ yWithOffset*(hDistance/2)
+	yWithTranslation := yWithOffset // * vDistance
 
-	screenX := ((floatX * widthDistance) + floatY*(widthDistance/2)) * hexSizeMultiplier
-	screenY := (floatY * heightDistance) * hexSizeMultiplier
+	screenX := xWithTranslation * pixelMultiplier
+	screenY := yWithTranslation * pixelMultiplier
 
-	return ScreenCoords{int(screenX) + 100, int(screenY) + 100}
-}
-
-func ConvertVertexToCoords(hex hex.Hex, vertex hex.Vertex) ScreenCoords {
-	centerCoords := ConvertCenterToCoords(hex)
-
-	screenX := centerCoords.X + int(vertex.X)
-	screenY := centerCoords.Y + int(vertex.Y)
-
-	return ScreenCoords{int(screenX), int(screenY)}
+	return ScreenCoords{int(screenX) + 1, int(screenY)}
 }
