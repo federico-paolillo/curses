@@ -96,8 +96,8 @@ func vertexAtAngle(hex Hex, angleDegs int) Vertex {
 
 	center := hex.Center()
 
-	floatCenterX := float64(center.X)
-	floatCenterY := float64(center.Y)
+	floatCenterX := (float64(center.X) * sqrt3) + (float64(center.Y) * (sqrt3 / 2))
+	floatCenterY := float64(center.Y) * (3 / 2)
 
 	x := floatCenterX + math.Cos(angleRads)
 	y := floatCenterY + math.Sin(angleRads)

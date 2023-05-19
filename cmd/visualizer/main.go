@@ -3,12 +3,12 @@ package main
 import (
 	"curses/cmd/visualizer/conversion"
 	"curses/pkg/hex"
+	"fmt"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 func main() {
-
 	hex1 := hex.New(-1, 0, 1)
 
 	coords := make([]conversion.ScreenCoords, 0, 6)
@@ -29,13 +29,17 @@ func main() {
 		coords2 = append(coords2, conversion.ConvertVertexToCoords(vertex))
 	}
 
-	// center1 := hex.Vertex{0, 0}
-	// // center2 := hex.Vertex{0, 1}
-	// center3 := hex.Vertex{1, 0}
+	hex3 := hex.New(-2, 0, 2)
 
-	// center1Coords := conversion.ConvertVertexToCoords(center1)
-	// // center2Coords := conversion.ConvertVertexToCoords(center2)
-	// center3Coords := conversion.ConvertVertexToCoords(center3)
+	coords3 := make([]conversion.ScreenCoords, 0, 6)
+
+	vertices3 := hex3.Vertices()
+
+	for _, vertex := range vertices3 {
+		coords3 = append(coords3, conversion.ConvertVertexToCoords(vertex))
+	}
+
+	fmt.Println(vertices2[0], vertices[2])
 
 	rl.InitWindow(800, 450, "curses")
 
@@ -61,7 +65,12 @@ func main() {
 		rl.DrawLine(int32(coords2[4].X), int32(coords2[4].Y), int32(coords2[5].X), int32(coords2[5].Y), rl.Red)
 		rl.DrawLine(int32(coords2[5].X), int32(coords2[5].Y), int32(coords2[0].X), int32(coords2[0].Y), rl.Red)
 
-		// rl.DrawLine(int32(center1Coords.X), int32(center1Coords.Y), int32(center3Coords.X), int32(center3Coords.Y), rl.Red)
+		rl.DrawLine(int32(coords3[0].X), int32(coords3[0].Y), int32(coords3[1].X), int32(coords3[1].Y), rl.Green)
+		rl.DrawLine(int32(coords3[1].X), int32(coords3[1].Y), int32(coords3[2].X), int32(coords3[2].Y), rl.Green)
+		rl.DrawLine(int32(coords3[2].X), int32(coords3[2].Y), int32(coords3[3].X), int32(coords3[3].Y), rl.Green)
+		rl.DrawLine(int32(coords3[3].X), int32(coords3[3].Y), int32(coords3[4].X), int32(coords3[4].Y), rl.Green)
+		rl.DrawLine(int32(coords3[4].X), int32(coords3[4].Y), int32(coords3[5].X), int32(coords3[5].Y), rl.Green)
+		rl.DrawLine(int32(coords3[5].X), int32(coords3[5].Y), int32(coords3[0].X), int32(coords3[0].Y), rl.Green)
 
 		rl.EndDrawing()
 	}

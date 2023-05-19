@@ -8,20 +8,16 @@ type ScreenCoords struct {
 	X, Y int
 }
 
-const pixelMultiplier = 50
+const pixelMultiplier = 100
 
-const vDistance = 3 / 2
-const hDistance = 1.75
+const halfHDistance = 0.875
 
 func ConvertVertexToCoords(vertex hex.Vertex) ScreenCoords {
-	xWithOffset := (vertex.X + (hDistance / 2))
-	yWithOffset := (vertex.Y + (1))
+	xWithOffset := vertex.X + halfHDistance
+	yWithOffset := vertex.Y + 1
 
-	xWithTranslation := xWithOffset //+ yWithOffset*(hDistance/2)
-	yWithTranslation := yWithOffset // * vDistance
-
-	screenX := xWithTranslation * pixelMultiplier
-	screenY := yWithTranslation * pixelMultiplier
+	screenX := xWithOffset * pixelMultiplier
+	screenY := yWithOffset * pixelMultiplier
 
 	return ScreenCoords{int(screenX) + 1, int(screenY)}
 }
